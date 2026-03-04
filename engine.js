@@ -65,7 +65,11 @@ class GameEngine {
 
     document.getElementById('btn-load').addEventListener('click', () => {
       audioManager.init();
-      this.showSaveScreen('load');
+      if (this.hasAutoSave()) {
+        this.loadAutoSave();
+      } else {
+        this.showSaveScreen('load');
+      }
     });
 
     // Game screen click
@@ -144,6 +148,11 @@ class GameEngine {
     this.showScreen('title-screen');
     audioManager.playBGM('title');
     this.drawTitleCanvas();
+    // オートセーブも手動セーブもなければ「つづきから」無効
+    const hasAnySave = this.hasAutoSave() || Array.from({length: 10}, (_, i) => localStorage.getItem(`aoi_save_${i}`)).some(Boolean);
+    const loadBtn = document.getElementById('btn-load');
+    loadBtn.disabled = !hasAnySave;
+    loadBtn.style.opacity = hasAnySave ? '' : '0.4';
   }
 
   drawTitleCanvas() {
@@ -200,6 +209,7 @@ class GameEngine {
 
   // === Game Start ===
   startGame() {
+    this.clearAutoSave();
     this.scenarioIndex = 0;
     this.empathy = 50;
     this.hollyRevealed = false;
@@ -354,6 +364,9 @@ class GameEngine {
         this.textIndicator.style.display = 'block';
         this.readLines.add(this.scenarioIndex);
 
+        // オートセーブ
+        this.autoSave();
+
         // Auto or skip mode
         if (this.autoMode) {
           this._autoTimer = setTimeout(() => this.advance(), 1500);
@@ -439,6 +452,9 @@ class GameEngine {
           }
         }
 
+        // 選択肢後にオートセーブ
+        this.autoSave();
+
         this.processCommand();
       });
       this.choiceContainer.appendChild(btn);
@@ -494,6 +510,7 @@ class GameEngine {
 
   // === Ending ===
   showEnding(title, subtitle, endType) {
+    this.clearAutoSave();
     audioManager.stopBGM();
     setTimeout(() => {
       if (endType === 'good') {
@@ -562,7 +579,7 @@ class GameEngine {
     }
   }
 
-  saveToSlot(slotIndex) {
+  _buildSaveData() {
     // Find current scene name
     let sceneName = '';
     for (let i = this.scenarioIndex; i >= 0; i--) {
@@ -576,7 +593,7 @@ class GameEngine {
       }
     }
 
-    const saveData = {
+    return {
       index: this.scenarioIndex,
       empathy: this.empathy,
       playerName: this.playerName,
@@ -586,8 +603,32 @@ class GameEngine {
       bg: this._currentBg,
       bgOverlay: this._currentBgOverlay,
     };
+  }
 
-    localStorage.setItem(`aoi_save_${slotIndex}`, JSON.stringify(saveData));
+  saveToSlot(slotIndex) {
+    localStorage.setItem(`aoi_save_${slotIndex}`, JSON.stringify(this._buildSaveData()));
+  }
+
+  // === Auto Save ===
+  autoSave() {
+    localStorage.setItem('aoi_autosave', JSON.stringify(this._buildSaveData()));
+    // 既読行も定期保存
+    localStorage.setItem('aoi_readlines', JSON.stringify([...this.readLines]));
+  }
+
+  hasAutoSave() {
+    return localStorage.getItem('aoi_autosave') !== null;
+  }
+
+  loadAutoSave() {
+    const data = localStorage.getItem('aoi_autosave');
+    if (data) {
+      this.loadGame(JSON.parse(data));
+    }
+  }
+
+  clearAutoSave() {
+    localStorage.removeItem('aoi_autosave');
   }
 }
 
