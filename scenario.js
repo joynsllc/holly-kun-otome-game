@@ -10,6 +10,7 @@ const SCENARIO = [
 { type:'label', label:'prologue_01' },
 { type:'bg', bg:'residential', bgOverlay:'morning' },
 { type:'bgm', bgm:'warm' },
+{ type:'se', se:'scene_change' },
 { type:'scene', text:'PROLOGUE　はじめの青' },
 { type:'label_display', text:'Scene 01　水戸、初日' },
 { type:'text', monologue:true, text:'3月。転勤の辞令から2週間で、わたしは水戸市に引っ越してきた。' },
@@ -29,6 +30,7 @@ const SCENARIO = [
 { type:'text', monologue:true, text:'……？' },
 { type:'text', monologue:true, text:'動いてる。生きてる。なんだこれ。' },
 { type:'text', speaker:'さくら', text:'あの……大丈夫ですか？' },
+{ type:'se', se:'heartbeat' },
 { type:'text', monologue:true, text:'（青いそれがゆっくりと振り返る。龍っぽい顔をしている。目がぱっちりしている。）', showHolly:true },
 { type:'text', speaker:'ホーリーくん', text:'あ。ひと。' },
 { type:'text', speaker:'さくら', text:'ひと、って……あなたも……まあ……' },
@@ -67,6 +69,7 @@ const SCENARIO = [
 { type:'text', speaker:'ホーリーくん', text:'26年かかったけどね。' },
 { type:'text', speaker:'さくら', text:'……26年。' },
 { type:'text', monologue:true, text:'26年。\nわたしとほぼ同い年じゃないか。' },
+{ type:'se', se:'wind' },
 { type:'text', monologue:true, text:'（スタグルのキッチンカーから梅酒の甘酸っぱい香りが漂い始める。）' },
 { type:'text', speaker:'さくら', text:'あのぼりに描いてある、梅のやつ……梅酒？' },
 { type:'text', speaker:'ホーリーくん', text:'百年梅酒。水戸名物。アウェーサポーターにも人気なんだよ。' },
@@ -100,6 +103,7 @@ const SCENARIO = [
 { type:'text', speaker:'ホーリーくん', text:'ずっと歌ってるよ。負けてても、歌ってる。' },
 { type:'text', speaker:'さくら', text:'負けてても？' },
 { type:'text', speaker:'ホーリーくん', text:'うん。それが好きなんだよね、オレ。' },
+{ type:'se', se:'cheer' },
 { type:'text', monologue:true, text:'（試合開始。歓声。スタジアムが揺れるような感覚。）' },
 { type:'text', monologue:true, text:'点が入った瞬間、隣のおじさんが飛び上がって、前の子どもが泣いて、後ろの女性が叫んだ。' },
 { type:'text', monologue:true, text:'わたしもなぜか、立ち上がっていた。' },
@@ -126,6 +130,7 @@ const SCENARIO = [
 { type:'text', monologue:true, text:'Ksスタに行ってみたが、試合がない日の競技場は静かで、ホーリーくんの姿はなかった。' },
 { type:'text', monologue:true, text:'スマートフォンで調べると、「アツマーレ」という言葉が出てきた。クラブハウス。城里町。' },
 { type:'text', monologue:true, text:'なんとなく、行ってみた。\n水戸から少し北へ。山に近い、緑の多い場所。町民センターの建物が見えてきた。' },
+{ type:'se', se:'heartbeat' },
 { type:'text', speaker:'ホーリーくん', text:'来た。', showHolly:true },
 { type:'text', speaker:'さくら', text:'なんでいるの、ここに！？ってか、ここどこ！？' },
 { type:'text', speaker:'ホーリーくん', text:'アツマーレ。クラブハウス。' },
@@ -146,6 +151,7 @@ const SCENARIO = [
 
 // =============== 第1章: 始まりの葵 ===============
 { type:'label', label:'chapter1' },
+{ type:'se', se:'scene_change' },
 { type:'scene', text:'第1章　始まりの葵\n1994〜1996年　草創期' },
 
 // Scene 1-1: 偕楽園 梅まつり
@@ -230,6 +236,7 @@ const SCENARIO = [
 
 // =============== 第2章: 青い海と、14連敗の話 ===============
 { type:'label', label:'chapter2' },
+{ type:'se', se:'scene_change' },
 { type:'scene', text:'第2章　青い海と、14連敗の話\n1997〜1999年　合併・JFL時代' },
 
 // Scene 2-1: ひたち海浜公園 ネモフィラ
@@ -305,12 +312,14 @@ const SCENARIO = [
 
 // =============== 第3章: 門番と呼ばれた空 ===============
 { type:'label', label:'chapter3' },
+{ type:'se', se:'scene_change' },
 { type:'scene', text:'第3章　門番と呼ばれた空\n2000年代〜2010年代　J2長期在籍' },
 
 // Scene 3-1: 千波湖畔 夕暮れ
 { type:'bg', bg:'senba', bgOverlay:'evening' },
 { type:'bgm', bgm:'melancholy' },
 { type:'label_display', text:'Scene 3-1　千波湖畔　夕暮れ' },
+{ type:'se', se:'wind' },
 { type:'text', monologue:true, text:'夏の終わり。ホーリーくんと千波湖の湖畔を歩いていた。', showHolly:true },
 { type:'text', monologue:true, text:'夕焼けが水面に映って、湖が燃えているみたいだった。' },
 { type:'text', speaker:'さくら', text:'J2参入からずっとJ2にいたって言ってたけど、どのくらい？' },
@@ -402,6 +411,7 @@ const SCENARIO = [
 
 // =============== 第4章: 次の50年のために ===============
 { type:'label', label:'chapter4' },
+{ type:'se', se:'scene_change' },
 { type:'scene', text:'第4章　次の50年のために\n2010年代〜2020年代　経営改革' },
 
 // Scene 4-1: 大洗 磯前神社
@@ -415,6 +425,7 @@ const SCENARIO = [
 { type:'text', speaker:'さくら', text:'ずっと前から……ホーリーくんに似てるね。ずっとそこにいる、って。' },
 { type:'text', speaker:'ホーリーくん', text:'そう思う？' },
 { type:'text', speaker:'さくら', text:'うん。' },
+{ type:'se', se:'wind' },
 { type:'text', monologue:true, text:'（波が鳥居に打ち寄せる。朝の光が海に反射する。）' },
 { type:'text', speaker:'ホーリーくん', text:'クラブも、ここみたいな場所であればいいなって思うんだよ。' },
 { type:'text', speaker:'さくら', text:'どういう意味？' },
@@ -473,6 +484,7 @@ const SCENARIO = [
 
 // =============== 最終章: 門の外へ ===============
 { type:'label', label:'final_chapter' },
+{ type:'se', se:'scene_change' },
 { type:'scene', text:'最終章　門の外へ\n2025年　J2優勝・J1昇格' },
 
 // Scene Final-1: シーズン最終盤
@@ -485,6 +497,7 @@ const SCENARIO = [
 { type:'text', speaker:'さくら', text:'明日、決まるかもしれないね。' },
 { type:'text', speaker:'ホーリーくん', text:'かもしれない。' },
 { type:'text', speaker:'さくら', text:'ホーリーくん、緊張してる？' },
+{ type:'se', se:'heartbeat' },
 { type:'text', speaker:'ホーリーくん', text:'……してる。' },
 { type:'text', speaker:'さくら', text:'え、初めて聞いた。ホーリーくんが緊張するって。' },
 { type:'text', speaker:'ホーリーくん', text:'そりゃするよ。26年待ってたんだから。' },
@@ -518,6 +531,7 @@ const SCENARIO = [
 { type:'text', monologue:true, text:'（そして——爆発するような歓声。）' },
 { type:'text', speaker:'光さん', text:'（遠くで）昇格——！！！！' },
 { type:'text', monologue:true, text:'（場内アナウンスが流れる。「長崎は引き分け——水戸ホーリーホック、J2優勝決定！」）' },
+{ type:'se', se:'sparkle' },
 { type:'text', monologue:true, text:'（もう一度、スタジアムが爆発した。）' },
 { type:'text', monologue:true, text:'（さくらが気づくと、泣いていた。なんで泣いているのか、自分でもわからなかった。）' },
 { type:'text', monologue:true, text:'（でも、涙は止まらなかった。）' },
@@ -559,6 +573,7 @@ const SCENARIO = [
 { type:'text', monologue:true, text:'……ずっと一人で。\n26年間。ここで待ち続けて、笑い続けて、ひとりで。' },
 { type:'text', speaker:'さくら', text:'ひとりじゃないよ、もう。' },
 { type:'text', speaker:'ホーリーくん', text:'うん。知ってる。' },
+{ type:'se', se:'wind' },
 { type:'text', monologue:true, text:'（夜風が吹いた。スタジアムの外灯が、二人を照らした。）' },
 { type:'text', monologue:true, text:'（遠くで、サポーターたちがまだ歌っている声が聞こえた。）' },
 { type:'text', speaker:'ホーリーくん', text:'来年から——2026シーズンからJ1だよ。スタジアムも変わる。' },
@@ -574,6 +589,7 @@ const SCENARIO = [
 { type:'text', speaker:'さくら', text:'「オレたち」って言った。' },
 { type:'text', speaker:'ホーリーくん', text:'言った。' },
 { type:'text', monologue:true, text:'その夜、水戸の街が青く輝いていた気がした。' },
+{ type:'se', se:'sparkle' },
 { type:'text', monologue:true, text:'葵の花が、26年ぶりに——\nようやく、大きく咲いた。' },
 { type:'ending', title:'GOOD END', subtitle:'「葵、咲く」', endType:'good' },
 
@@ -588,6 +604,7 @@ const SCENARIO = [
 { type:'text', speaker:'ホーリーくん', text:'怒ってない。' },
 { type:'text', speaker:'さくら', text:'……ごめん、なんか。' },
 { type:'text', speaker:'ホーリーくん', text:'謝らなくていい。来られないときもある。それが普通だから。' },
+{ type:'se', se:'wind' },
 { type:'text', monologue:true, text:'（ホーリーくんが、スタジアムを見上げた。）' },
 { type:'text', speaker:'ホーリーくん', text:'でも……オレはここにいるから。' },
 { type:'text', speaker:'さくら', text:'……うん。' },
@@ -621,7 +638,7 @@ const BG_MAP = {
   'plum': 'images/bg_plum_kairakuen.jpg',
   'torii': 'images/bg_torii.jpg',
   'oarai': 'images/bg_oarai_shrine.jpg',
-  'atsumare': 'images/bg_nemophila2.jpg',
+  'atsumare': 'images/bg_atsumare.jpg',
 };
 
 // Background overlay styles

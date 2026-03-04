@@ -309,7 +309,12 @@ class GameEngine {
           if (!this.hollyRevealed && speaker === 'ホーリーくん') {
             speaker = '？？？';
           }
-          this.showText(speaker, this.replacePlayerName(cmd.text), cmd.monologue);
+          let displayText = this.replacePlayerName(cmd.text);
+          // セリフ（speaker有り）の冒頭の（ト書き）を除去
+          if (cmd.speaker) {
+            displayText = displayText.replace(/^（[^）]*）\s*/, '');
+          }
+          this.showText(speaker, displayText, cmd.monologue);
         }
         break;
 
