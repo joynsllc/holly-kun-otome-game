@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>蒼の門番 〜ホーリーくんと歩む、葵色の軌跡〜</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="game-container">
+  <!-- Title Screen -->
+  <div id="title-screen" class="screen active">
+    <canvas id="title-canvas"></canvas>
+    <div id="title-overlay">
+      <h1 class="title-main">蒼の門番</h1>
+      <p class="title-sub">〜ホーリーくんと歩む、葵色の軌跡〜</p>
+      <div class="title-menu">
+        <button class="menu-btn" id="btn-start">はじめから</button>
+        <button class="menu-btn" id="btn-load">つづきから</button>
+      </div>
+      <p class="title-credit">Powered by 水戸ホーリーホック</p>
+    </div>
+  </div>
+
+  <!-- Name Input Screen -->
+  <div id="name-screen" class="screen">
+    <div id="name-bg"></div>
+    <div id="name-content">
+      <h2 class="name-title">あなたの名前を教えてください</h2>
+      <p class="name-desc">※ 主人公の名前を入力してください</p>
+      <input type="text" id="name-input" class="name-input" placeholder="さくら" maxlength="10" autocomplete="off">
+      <button class="menu-btn" id="btn-name-ok">決定</button>
+    </div>
+  </div>
+
+  <!-- Game Screen -->
+  <div id="game-screen" class="screen">
+    <div id="bg-layer"></div>
+    <div id="bg-overlay"></div>
+    <div id="character-layer">
+      <img id="holly-sprite" src="images/holly.png" alt="ホーリーくん" class="character-img hidden">
+    </div>
+    <div id="scene-label" class="hidden"></div>
+    <div id="text-box">
+      <div id="speaker-name"></div>
+      <div id="text-content"></div>
+      <div id="text-indicator">▼</div>
+    </div>
+    <div id="choice-container" class="hidden"></div>
+    <!-- UI Buttons -->
+    <div id="game-ui">
+      <button class="ui-btn" id="btn-auto" title="オート">AUTO</button>
+      <button class="ui-btn" id="btn-skip" title="スキップ">SKIP</button>
+      <button class="ui-btn" id="btn-save" title="セーブ">SAVE</button>
+      <button class="ui-btn" id="btn-menu" title="メニュー">MENU</button>
+      <button class="ui-btn" id="btn-sound" title="BGM ON/OFF">♪</button>
+    </div>
+    <!-- Empathy gauge -->
+    <div id="empathy-gauge" class="hidden">
+      <div id="empathy-fill"></div>
+      <span id="empathy-label">共感度</span>
+    </div>
+  </div>
+
+  <!-- Save/Load Screen -->
+  <div id="save-screen" class="screen">
+    <h2>セーブ / ロード</h2>
+    <div id="save-slots"></div>
+    <button class="menu-btn" id="btn-back-save">もどる</button>
+  </div>
+
+  <!-- Ending Screen -->
+  <div id="ending-screen" class="screen">
+    <div id="ending-bg"></div>
+    <div id="ending-content">
+      <h2 id="ending-title"></h2>
+      <p id="ending-subtitle"></p>
+      <button class="menu-btn" id="btn-title">タイトルへ</button>
+    </div>
+  </div>
+</div>
+
+<script src="audio.js"></script>
+<script src="scenario.js"></script>
+<script src="engine.js"></script>
+</body>
+</html>
