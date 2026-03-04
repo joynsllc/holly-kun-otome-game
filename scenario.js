@@ -1,5 +1,5 @@
 // === シナリオデータ ===
-// シナリオβ版v2を忠実に実装
+// シナリオβ版v3を忠実に実装
 // 各行: { type, speaker, text, bg, bgOverlay, showHolly, hideHolly, bgm, se, label, choices, monologue }
 
 const SCENARIO = [
@@ -16,9 +16,9 @@ const SCENARIO = [
 { type:'text', monologue:true, text:'3月。転勤の辞令から2週間で、わたしは水戸市に引っ越してきた。' },
 { type:'text', monologue:true, text:'朝から荷ほどきをしていたが、段ボールに埋もれた部屋から逃げたくて外に出た。' },
 { type:'text', monologue:true, text:'新しい街は、思ったより静かで、思ったより広くて、\nそして——' },
-{ type:'text', monologue:true, text:'（遠くに、コンクリート造のスタジアムらしき建物が見える。バックスタンドに大きく「MITO」の文字。）' },
+{ type:'text', monologue:true, text:'（遠くに、コンクリート造のスタジアムらしき建物が見える。照明塔が空に突き出ている。）' },
 { type:'text', monologue:true, text:'……でかい。' },
-{ type:'text', monologue:true, text:'あの「MITO」って書いてある建物、スタジアムかな。' },
+{ type:'text', monologue:true, text:'あの照明塔、スタジアムかな。' },
 { type:'text', monologue:true, text:'地図も見ないまま、なんとなく近づいてみた。\nそこで。' },
 
 // Scene 02: 出会い
@@ -576,14 +576,14 @@ const SCENARIO = [
 { type:'se', se:'wind' },
 { type:'text', monologue:true, text:'（夜風が吹いた。スタジアムの外灯が、二人を照らした。）' },
 { type:'text', monologue:true, text:'（遠くで、サポーターたちがまだ歌っている声が聞こえた。）' },
-{ type:'text', speaker:'ホーリーくん', text:'来年から——2026シーズンからJ1だよ。スタジアムも変わる。' },
-{ type:'text', speaker:'さくら', text:'スタジアム変わるの？' },
-{ type:'text', speaker:'ホーリーくん', text:'うん。笠松ってとこ。もっと大きい。J1の基準を満たしてるから。' },
-{ type:'text', speaker:'さくら', text:'……ここじゃなくなるんだ。' },
-{ type:'text', speaker:'ホーリーくん', text:'でも、水戸のクラブはここにあるから。場所が変わっても、ホームはホームだよ。' },
-{ type:'text', speaker:'さくら', text:'……そっか。' },
-{ type:'text', speaker:'ホーリーくん', text:'来てくれる？　笠松にも。' },
-{ type:'text', speaker:'さくら', text:'行く。絶対行く。' },
+{ type:'text', speaker:'ホーリーくん', text:'来年から——2026シーズンからJ1だよ。' },
+{ type:'text', speaker:'さくら', text:'……ほんとうに行くんだね、J1に。' },
+{ type:'text', speaker:'ホーリーくん', text:'うん。ちなみに、前半戦はここでやるよ。このスタジアムで。' },
+{ type:'text', speaker:'さくら', text:'え、ここで？' },
+{ type:'text', speaker:'ホーリーくん', text:'2026シーズンは2期制でね。前半はKsスタ、後半から笠松ってとこに移る。' },
+{ type:'text', speaker:'さくら', text:'……じゃあまだここで試合があるんだ。' },
+{ type:'text', speaker:'ホーリーくん', text:'あるよ。だから——来てくれる？' },
+{ type:'text', speaker:'さくら', text:'行く。絶対行く。後半の笠松も、両方。' },
 { type:'text', speaker:'ホーリーくん', text:'（ゆっくり、でも確かに）……うん。' },
 { type:'text', speaker:'ホーリーくん', text:'強い相手がいっぱいくる。でも大丈夫だよ。だってオレたちがいるから。' },
 { type:'text', speaker:'さくら', text:'「オレたち」って言った。' },
