@@ -146,42 +146,26 @@ class GameEngine {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    // Draw Holly-kun on title
-    const hollyImg = new Image();
-    hollyImg.src = 'images/holly.png';
-    hollyImg.onload = () => {
-      const scale = Math.min(canvas.height * 0.7 / hollyImg.height, canvas.width * 0.4 / hollyImg.width);
-      const w = hollyImg.width * scale;
-      const h = hollyImg.height * scale;
-      const x = canvas.width * 0.72 - w / 2;
-      const y = canvas.height - h - 20;
-
-      // Background gradient
-      const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
-      grad.addColorStop(0, '#0d1f3c');
-      grad.addColorStop(0.5, '#1a3a6b');
-      grad.addColorStop(1, '#0d1f3c');
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Floating particles (aoi/hollyhock petals)
-      for (let i = 0; i < 30; i++) {
-        const px = Math.random() * canvas.width;
-        const py = Math.random() * canvas.height;
-        const size = Math.random() * 4 + 2;
-        ctx.fillStyle = `rgba(74, 144, 217, ${Math.random() * 0.3 + 0.05})`;
-        ctx.beginPath();
-        ctx.arc(px, py, size, 0, Math.PI * 2);
-        ctx.fill();
+    // メインビジュアル画像を表示
+    const titleImg = new Image();
+    titleImg.src = 'images/title_visual.png';
+    titleImg.onload = () => {
+      // 画面全体をカバーするように描画（cover方式）
+      const imgRatio = titleImg.width / titleImg.height;
+      const canvasRatio = canvas.width / canvas.height;
+      let drawW, drawH, drawX, drawY;
+      if (canvasRatio > imgRatio) {
+        drawW = canvas.width;
+        drawH = canvas.width / imgRatio;
+        drawX = 0;
+        drawY = (canvas.height - drawH) / 2;
+      } else {
+        drawH = canvas.height;
+        drawW = canvas.height * imgRatio;
+        drawX = (canvas.width - drawW) / 2;
+        drawY = 0;
       }
-
-      // Holly-kun with glow
-      ctx.shadowColor = 'rgba(74, 144, 217, 0.4)';
-      ctx.shadowBlur = 30;
-      ctx.globalAlpha = 0.9;
-      ctx.drawImage(hollyImg, x, y, w, h);
-      ctx.globalAlpha = 1;
-      ctx.shadowBlur = 0;
+      ctx.drawImage(titleImg, drawX, drawY, drawW, drawH);
     };
   }
 
