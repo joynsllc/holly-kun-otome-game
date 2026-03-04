@@ -344,9 +344,10 @@ class GameEngine {
 
   // === Text Display ===
   showText(speaker, text, isMonologue) {
-    // monologue時はspeaker非表示
+    // monologue時はspeaker非表示（visibility:hiddenでスペース確保→テキスト位置統一）
     this.speakerName.textContent = isMonologue ? '' : speaker;
-    this.speakerName.style.display = isMonologue ? 'none' : '';
+    this.speakerName.style.visibility = isMonologue ? 'hidden' : '';
+    this.speakerName.style.display = '';
     this.textContent.textContent = '';
     this.textContent.classList.toggle('monologue', !!isMonologue);
     this.textIndicator.style.display = 'none';
@@ -497,7 +498,7 @@ class GameEngine {
         overlay.remove();
         callback();
       }, 800);
-    }, 2500);
+    }, 4500);
   }
 
   // === Empathy Gauge ===
