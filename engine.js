@@ -475,30 +475,51 @@ class GameEngine {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(13,31,60,0.95); z-index: 100;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      opacity: 0; transition: opacity 0.8s ease;
+      opacity: 0; transition: opacity 0.6s ease;
     `;
-    const title = document.createElement('h2');
-    title.style.cssText = `
-      font-family: 'Noto Serif JP', serif;
-      color: #f0ece4; font-size: clamp(1.5rem, 4vw, 2.5rem);
-      letter-spacing: 0.3em; text-align: center; line-height: 2;
-      white-space: pre-line;
-    `;
-    title.textContent = text;
-    overlay.appendChild(title);
-    document.body.appendChild(overlay);
 
-    requestAnimationFrame(() => {
-      overlay.style.opacity = '1';
+    // Split text into lines for staggered animation
+    const lines = text.split('\n');
+    const elements = [];
+    lines.forEach((line, i) => {
+      const el = document.createElement('div');
+      el.style.cssText = `
+        font-family: 'Noto Serif JP', serif;
+        color: #f0ece4;
+        font-size: ${i === 0 ? 'clamp(1.4rem, 5vw, 2.5rem)' : 'clamp(0.85rem, 2.5vw, 1.2rem)'};
+        letter-spacing: ${i === 0 ? '0.3em' : '0.15em'};
+        text-align: center; line-height: 1.8;
+        opacity: 0; transform: translateY(10px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+        ${i > 0 ? 'color: rgba(196,162,101,0.85); margin-top: 0.5em;' : ''}
+      `;
+      el.textContent = line;
+      overlay.appendChild(el);
+      elements.push(el);
     });
 
+    document.body.appendChild(overlay);
+
+    // Fade in overlay
+    requestAnimationFrame(() => {
+      overlay.style.opacity = '1';
+      // Stagger each line by 0.2s
+      elements.forEach((el, i) => {
+        setTimeout(() => {
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0)';
+        }, 200 + i * 200);
+      });
+    });
+
+    // Total: fade in 0.6s + stagger + hold 1.5s + fade out 0.5s ≈ 3.5s
     setTimeout(() => {
       overlay.style.opacity = '0';
       setTimeout(() => {
         overlay.remove();
         callback();
-      }, 800);
-    }, 4500);
+      }, 500);
+    }, 3500);
   }
 
   // === Empathy Gauge ===
@@ -518,24 +539,38 @@ class GameEngine {
   showEnding(title, subtitle, endType) {
     this.clearAutoSave();
     audioManager.stopBGM();
-    setTimeout(() => {
-      if (endType === 'good') {
-        audioManager.playBGM('ending');
-      } else {
-        audioManager.playBGM('sad');
-      }
-    }, 500);
 
     const endingBg = document.getElementById('ending-bg');
+    const endingContent = document.getElementById('ending-content');
+    const endingTitle = document.getElementById('ending-title');
+    const endingSubtitle = document.getElementById('ending-subtitle');
+
     if (endType === 'good') {
       endingBg.style.background = 'linear-gradient(135deg, #0d1f3c 0%, #1a3a6b 50%, #2d5aa0 100%)';
     } else {
       endingBg.style.background = 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)';
     }
 
-    document.getElementById('ending-title').textContent = title;
-    document.getElementById('ending-subtitle').textContent = subtitle;
+    // Hide content initially for delayed reveal
+    endingContent.style.opacity = '0';
+    endingContent.style.transition = 'opacity 1.5s ease';
+    endingTitle.textContent = title;
+    endingSubtitle.textContent = subtitle;
     this.showScreen('ending-screen');
+
+    // BGM starts with screen (simultaneous)
+    setTimeout(() => {
+      if (endType === 'good') {
+        audioManager.playBGM('ending');
+      } else {
+        audioManager.playBGM('sad');
+      }
+    }, 300);
+
+    // Text appears after 1.2s pause for emotional spacing
+    setTimeout(() => {
+      endingContent.style.opacity = '1';
+    }, 1200);
 
     // Save read lines
     localStorage.setItem('aoi_readlines', JSON.stringify([...this.readLines]));

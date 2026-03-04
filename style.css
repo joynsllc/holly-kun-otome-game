@@ -227,12 +227,12 @@ body {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  height: 85%;
+  height: 80%;
   pointer-events: none;
 }
 
 .character-img {
-  max-height: 100%;
+  max-height: 80%;
   width: auto;
   object-fit: contain;
   filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
@@ -511,7 +511,7 @@ body {
   position: relative;
   z-index: 1;
   text-align: center;
-  animation: fadeInUp 2s ease-out;
+  /* animation handled by JS for timing control */
 }
 
 #ending-title {
@@ -607,7 +607,7 @@ body {
     font-size: 0.5rem;
   }
   #character-layer {
-    height: 55%;
+    height: 65%;
   }
   .title-main {
     font-size: clamp(2.2rem, 10vw, 3.5rem);
@@ -651,7 +651,7 @@ body {
     padding: 0.8em 1em;
   }
   #character-layer {
-    height: 50%;
+    height: 60%;
   }
 }
 
