@@ -568,4 +568,26 @@ class GameEngine {
 window.addEventListener('DOMContentLoaded', () => {
   const engine = new GameEngine();
   engine.initTitleScreen();
+
+  // iOS Safari: dvh フォールバック & リサイズ対応
+  const setVH = () => {
+    document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+  };
+  setVH();
+  window.addEventListener('resize', setVH);
+
+  // タイトル画面リサイズ時に再描画
+  window.addEventListener('resize', () => {
+    if (document.getElementById('title-screen').classList.contains('active')) {
+      engine.drawTitleCanvas();
+    }
+  });
+
+  // iOS Safari: 名前入力時にキーボードで画面が崩れるのを防ぐ
+  const nameInput = document.getElementById('name-input');
+  nameInput.addEventListener('focus', () => {
+    setTimeout(() => {
+      nameInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 300);
+  });
 });
