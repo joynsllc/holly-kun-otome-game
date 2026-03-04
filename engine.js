@@ -12,6 +12,7 @@ class GameEngine {
     this.currentText = '';
     this.typeTimer = null;
     this.playerName = 'さくら'; // デフォルト名
+    this.hollyRevealed = false; // ホーリーくんが名乗ったかどうか
 
     // DOM elements
     this.bgLayer = document.getElementById('bg-layer');
@@ -78,8 +79,13 @@ class GameEngine {
       e.stopPropagation();
       this.autoMode = !this.autoMode;
       this.skipMode = false;
+      clearTimeout(this._autoTimer);
       e.target.classList.toggle('active', this.autoMode);
       document.getElementById('btn-skip').classList.remove('active');
+      // autoをONにした時、テキスト表示完了済みなら進行開始
+      if (this.autoMode && !this.isTyping) {
+        this._autoTimer = setTimeout(() => this.advance(), 1500);
+      }
     });
 
     document.getElementById('btn-skip').addEventListener('click', (e) => {
@@ -173,8 +179,11 @@ class GameEngine {
   showNameInput() {
     this.showScreen('name-screen');
     const input = document.getElementById('name-input');
-    input.value = '';
-    setTimeout(() => input.focus(), 300);
+    input.value = 'さくら';
+    setTimeout(() => {
+      input.focus();
+      input.select();
+    }, 300);
   }
 
   confirmName() {
@@ -193,6 +202,7 @@ class GameEngine {
   startGame() {
     this.scenarioIndex = 0;
     this.empathy = 50;
+    this.hollyRevealed = false;
     this.showScreen('game-screen');
     this.empathyGauge.classList.remove('hidden');
     this.updateEmpathyGauge();
@@ -203,6 +213,8 @@ class GameEngine {
     this.scenarioIndex = saveData.index;
     this.empathy = saveData.empathy;
     this.playerName = saveData.playerName || 'さくら';
+    // 名乗りシーン（40行目付近）以降ならrevealed
+    this.hollyRevealed = saveData.hollyRevealed !== undefined ? saveData.hollyRevealed : true;
     this.showScreen('game-screen');
     this.empathyGauge.classList.remove('hidden');
     this.updateEmpathyGauge();
@@ -277,11 +289,18 @@ class GameEngine {
           this.hollySprite.classList.add('hidden');
           this.hollySprite.classList.remove('visible');
         }
-        this.showText(
-          this.replacePlayerName(cmd.speaker || ''),
-          this.replacePlayerName(cmd.text),
-          cmd.monologue
-        );
+        // ホーリーくんが名乗るシーン検出（「水戸ホーリーホックのホーリーくん」）
+        if (!this.hollyRevealed && cmd.text && cmd.text.includes('水戸ホーリーホックのホーリーくん')) {
+          this.hollyRevealed = true;
+        }
+        {
+          let speaker = this.replacePlayerName(cmd.speaker || '');
+          // 名乗り前は「???」
+          if (!this.hollyRevealed && speaker === 'ホーリーくん') {
+            speaker = '？？？';
+          }
+          this.showText(speaker, this.replacePlayerName(cmd.text), cmd.monologue);
+        }
         break;
 
       case 'choice':
@@ -310,7 +329,9 @@ class GameEngine {
 
   // === Text Display ===
   showText(speaker, text, isMonologue) {
-    this.speakerName.textContent = speaker;
+    // monologue時はspeaker非表示
+    this.speakerName.textContent = isMonologue ? '' : speaker;
+    this.speakerName.style.display = isMonologue ? 'none' : '';
     this.textContent.textContent = '';
     this.textContent.classList.toggle('monologue', !!isMonologue);
     this.textIndicator.style.display = 'none';
@@ -319,6 +340,7 @@ class GameEngine {
 
     let charIndex = 0;
     clearInterval(this.typeTimer);
+    clearTimeout(this._autoTimer);
 
     const speed = this.skipMode ? 1 : this.typeSpeed;
 
@@ -334,7 +356,7 @@ class GameEngine {
 
         // Auto or skip mode
         if (this.autoMode) {
-          setTimeout(() => this.advance(), 1500);
+          this._autoTimer = setTimeout(() => this.advance(), 1500);
         } else if (this.skipMode) {
           setTimeout(() => this.advance(), 50);
         }
@@ -343,6 +365,9 @@ class GameEngine {
   }
 
   advance() {
+    // 選択肢表示中は進行しない
+    if (!this.choiceContainer.classList.contains('hidden')) return;
+
     if (this.isTyping) {
       // Complete current text immediately
       clearInterval(this.typeTimer);
@@ -351,8 +376,9 @@ class GameEngine {
       this.textIndicator.style.display = 'block';
       this.readLines.add(this.scenarioIndex);
 
+      // autoモードならタイマーで次に進む
       if (this.autoMode) {
-        setTimeout(() => this.advance(), 1500);
+        this._autoTimer = setTimeout(() => this.advance(), 1500);
       } else if (this.skipMode) {
         setTimeout(() => this.advance(), 50);
       }
@@ -554,6 +580,7 @@ class GameEngine {
       index: this.scenarioIndex,
       empathy: this.empathy,
       playerName: this.playerName,
+      hollyRevealed: this.hollyRevealed,
       date: new Date().toLocaleString('ja-JP'),
       sceneName,
       bg: this._currentBg,

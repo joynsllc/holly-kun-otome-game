@@ -29,7 +29,10 @@ class AudioManager {
   toggleBGM() {
     this.bgmEnabled = !this.bgmEnabled;
     if (!this.bgmEnabled) {
+      this._lastBGMName = this._currentBGMName || null;
       this.stopBGM();
+    } else if (this._lastBGMName) {
+      this.playBGM(this._lastBGMName);
     }
     return this.bgmEnabled;
   }
@@ -678,6 +681,9 @@ class AudioManager {
 
   // Play BGM by name
   playBGM(name) {
+    if (name !== 'silence') {
+      this._currentBGMName = name;
+    }
     const bgmMap = {
       'title': () => this.playBGM_title(),
       'warm': () => this.playBGM_warm(),
